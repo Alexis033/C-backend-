@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "izlPEpdX67akp+i5w1wK3a6HN16oeZxKVVCFemokaBRlSBVVVisle9XeqdHJG5yA4O5dTl63+TktzCG3UkrqkA==",
+  "dgSpecHash": "0TT6+BKDb2xFrX0DpX3JM6iCI3vF+NKLpDOZiWz7+BsVIdsj84yTs+UzloWGLqdY3xxBfqzyg+h0jc69+m8d7w==",
   "success": true,
   "projectFilePath": "C:\\Users\\maikcol.guevara\\Desktop\\Nueva carpeta (2)\\C-backend-\\Backend\\Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maikcol.guevara\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\maikcol.guevara\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\maikcol.guevara\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
     "C:\\Users\\maikcol.guevara\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\maikcol.guevara\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.12\\microsoft.aspnetcore.openapi.7.0.12.nupkg.sha512",
     "C:\\Users\\maikcol.guevara\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

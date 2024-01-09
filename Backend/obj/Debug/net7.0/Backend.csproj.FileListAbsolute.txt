@@ -150,3 +150,4 @@ C:\Users\maikcol.guevara\Desktop\Nueva carpeta (2)\C-backend-\Backend\obj\Debug\
 C:\Users\maikcol.guevara\Desktop\Nueva carpeta (2)\C-backend-\Backend\obj\Debug\net7.0\Backend.pdb
 C:\Users\maikcol.guevara\Desktop\Nueva carpeta (2)\C-backend-\Backend\obj\Debug\net7.0\Backend.genruntimeconfig.cache
 C:\Users\maikcol.guevara\Desktop\Nueva carpeta (2)\C-backend-\Backend\obj\Debug\net7.0\ref\Backend.dll
+C:\Users\maikcol.guevara\Desktop\Nueva carpeta (2)\C-backend-\Backend\bin\Debug\net7.0\FluentValidation.dll
