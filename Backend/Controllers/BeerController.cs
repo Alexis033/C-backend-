@@ -1,9 +1,8 @@
 ﻿using Backend.DTOs;
 using Backend.Models;
+using Backend.services;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
@@ -11,48 +10,31 @@ namespace Backend.Controllers
     [ApiController]
     public class BeerController : ControllerBase
     {
-        private StoreContext _Context;
         private IValidator<BeerInsertDTO> _beerInsertValidator;
         private IValidator<BeerUpdateDTO> _beerUpdateValidator;
+        private ICommonService<BeerDTO, BeerInsertDTO, BeerUpdateDTO> _beerService;
 
         public BeerController(StoreContext context, 
             IValidator<BeerInsertDTO> beerInsertValidator,
-            IValidator<BeerUpdateDTO> beerUpdateValidator)
+            IValidator<BeerUpdateDTO> beerUpdateValidator,
+            ICommonService<BeerDTO, BeerInsertDTO, BeerUpdateDTO> beerService)
         {
-            _Context = context;
             _beerInsertValidator = beerInsertValidator;
             _beerUpdateValidator = beerUpdateValidator;
+            _beerService = beerService;
         }
         [HttpGet]
         public async Task<IEnumerable<BeerDTO>> Get()
         {
-            return await _Context.Beers.Select(b => new BeerDTO
-            {
-                Id = b.BeerID,
-                Name = b.Name,
-                BrandID = b.BrandID,
-                Alcohol = b.Alcohol
-            }).ToListAsync();
+            return await _beerService.Get();
         }
-
+         
         [HttpGet("{id}")]
         public async Task<ActionResult<BeerDTO>> GetById(int id)
         {
-            var beer = await _Context.Beers.FindAsync(id);
+            var beerDto = await _beerService.GetById(id);
 
-            if (beer == null)
-            {
-                return NotFound();
-            }
-
-            var beerDTO = new BeerDTO
-            {
-                Id= beer.BeerID,
-                Name = beer.Name,
-                BrandID = beer.BrandID,
-                Alcohol = beer.Alcohol
-            };
-            return Ok(beerDTO);
+            return beerDto == null ? NotFound() : Ok(beerDto);
         }
 
         [HttpPost]
@@ -64,26 +46,10 @@ namespace Backend.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
-            var beer = new Beer
-            {
-                Name = newBeer.Name,
-                BrandID = newBeer.BrandID,
-                Alcohol = newBeer.Alcohol
-            };
+            
+            var beerDto = await _beerService.Add(newBeer);
 
-            await _Context.Beers.AddAsync(beer);
-            await _Context.SaveChangesAsync();
-
-            var beerDto = new BeerDTO
-            {
-                Id = beer.BeerID,
-                Name = beer.Name,
-                BrandID = beer.BrandID,
-                Alcohol = beer.Alcohol
-
-            };
-
-            return CreatedAtAction(nameof(GetById), new{ id = beer.BeerID}, beerDto);
+             return CreatedAtAction(nameof(GetById), new{ id = beerDto.Id}, beerDto);
         }
 
         [HttpPut("{id}")]
@@ -94,43 +60,15 @@ namespace Backend.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
-            var beer = await _Context.Beers.FindAsync(id);
-
-            if (beer == null)
-            {
-                return NotFound();
-            }
-
-            beer.Name = changedBeer.Name;
-            beer.BrandID = changedBeer.BrandID;
-            beer.Alcohol = changedBeer.Alcohol;
-
-            await _Context.SaveChangesAsync();
-
-            var beerDto = new BeerDTO
-            {
-                Id = beer.BeerID,
-                Name = beer.Name,
-                BrandID = beer.BrandID,
-                Alcohol = beer.Alcohol
-            };
-            return Ok(beerDto);
+            var beerDto= await _beerService.Update(id, changedBeer);
+            return beerDto == null ? NotFound() : Ok(beerDto);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteBeer(int id)
+        public async Task<ActionResult<BeerDTO>> DeleteBeer(int id)
         {
-            var beer = await _Context.Beers.FindAsync(id);
-
-            if(beer == null)
-            {
-                return NotFound();
-            }
-
-             _Context.Beers.Remove(beer);
-            await _Context.SaveChangesAsync();
-
-            return NoContent();
+            var beerDto = await _beerService.Delete(id);
+            return beerDto== null ? NotFound() : Ok(beerDto);
         }
            
     }

@@ -15,6 +15,7 @@ builder.Services.AddSingleton<IRandomService, RandomService>();
 //builder.Services.AddTransient<IRandomService, RandomService>();
 
 builder.Services.AddScoped<IPostsService, PostsService>();
+builder.Services.AddScoped<ICommonService<BeerDTO, BeerInsertDTO, BeerUpdateDTO>, BeerService>();
 
 //HttpClient servicio jsonplaceholder
 builder.Services.AddHttpClient<IPostsService, PostsService>(c =>
