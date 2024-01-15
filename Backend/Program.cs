@@ -1,5 +1,6 @@
 using Backend.DTOs;
 using Backend.Models;
+using Backend.Repository;
 using Backend.services;
 using Backend.Validators;
 using FluentValidation;
@@ -16,6 +17,9 @@ builder.Services.AddSingleton<IRandomService, RandomService>();
 
 builder.Services.AddScoped<IPostsService, PostsService>();
 builder.Services.AddScoped<ICommonService<BeerDTO, BeerInsertDTO, BeerUpdateDTO>, BeerService>();
+
+//Repository
+builder.Services.AddScoped<IRepository<Beer>, BeerRepository>();
 
 //HttpClient servicio jsonplaceholder
 builder.Services.AddHttpClient<IPostsService, PostsService>(c =>
